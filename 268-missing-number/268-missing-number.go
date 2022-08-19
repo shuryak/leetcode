@@ -1,11 +1,9 @@
 func missingNumber(nums []int) int {
-    var result int
-    
-    for i, num := range nums {
-        result ^= i ^ num
+    var sum int
+    for _, num := range nums {
+        sum += num
     }
     
-    result ^= len(nums)
-    
-    return result
+    // Ожидаемая сумма (арифметическая прогрессия) с n+1 элементом минус фактическая сумма
+    return (len(nums) + 1) * len(nums) / 2 - sum
 }
