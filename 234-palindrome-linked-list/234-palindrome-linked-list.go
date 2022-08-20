@@ -1,3 +1,5 @@
+// Разворачиваем правую часть. Время O(n). Память O(1)
+
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
