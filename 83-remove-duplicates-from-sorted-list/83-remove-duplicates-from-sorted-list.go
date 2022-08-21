@@ -18,15 +18,13 @@ func deleteDuplicates(head *ListNode) *ListNode {
             if prev == head {
                 head = cur
                 prev = cur
-                cur = cur.Next
             } else {
                 prev.Next = cur.Next
-                cur = cur.Next
             }
         } else {
             prev = cur
-            cur = cur.Next
         }
+        cur = cur.Next
     }
     
     return head
