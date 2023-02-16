@@ -6,38 +6,41 @@
  *     Right *TreeNode
  * }
  */
+
+type NodePath struct {
+	*TreeNode
+	Sum int
+}
+
 func hasPathSum(root *TreeNode, targetSum int) bool {
-    if root == nil{
-        return false
-    }
+	if root == nil {
+		return false
+	}
 
-    sums := make(map[*TreeNode]int)
+	searchStack := []*NodePath{{root, root.Val}}
 
-    stack := []*TreeNode{root}
+	for len(searchStack) > 0 {
+		node := searchStack[len(searchStack)-1]
+		searchStack = searchStack[:len(searchStack)-1]
 
-    for len(stack) > 0 {
-        for i := 0; i < len(stack); i++ {
-            node := stack[len(stack)-1]
-            stack = stack[:len(stack)-1]
+		isLeaf := node.Left == nil && node.Right == nil
+		if isLeaf && node.Sum == targetSum {
+			return true
+		}
 
-            if node == nil {
-                continue
-            }
+		if node.Right != nil {
+			searchStack = append(
+				searchStack,
+				&NodePath{node.Right, node.Sum + node.Right.Val},
+			)
+		}
+		if node.Left != nil {
+			searchStack = append(
+				searchStack,
+				&NodePath{node.Left, node.Sum + node.Left.Val},
+			)
+		}
+	}
 
-            isLeaf := node.Left == nil && node.Right == nil
-
-            if isLeaf && sums[node] + node.Val == targetSum {
-                return true
-            }
-
-            if !isLeaf {
-                sums[node.Left] = sums[node] + node.Val
-                sums[node.Right] = sums[node] + node.Val
-            }
-
-            stack = append(stack, node.Right, node.Left)
-        }
-    }
-
-    return false
+	return false
 }
