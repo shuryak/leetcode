@@ -16,7 +16,7 @@ func minDepth(root *TreeNode) int {
     depth := 1
 
     for len(searchQueue) > 0 {
-        levelSize := len(searchQueue)
+        levelSize := len(searchQueue) // depth нужно увеличивать только когда пробежимся по всему "горизонтальному уровню"
 
         for i := 0; i < levelSize; i++ {
             node := searchQueue[0]
